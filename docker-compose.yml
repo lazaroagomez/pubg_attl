@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  pubg-leaderboard:
+    build: .
+    ports:
+      - "${APP_PORT:-8080}:80"
+    volumes:
+      - ./database:/app/database
+      - ./logs:/app/logs
+    environment:
+      - PUBG_API_KEY=${PUBG_API_KEY}
+      - PUBG_PLATFORM=${PUBG_PLATFORM:-steam}
+      - PUBG_SHARD=${PUBG_SHARD:-steam}
+      - APP_NAME=${APP_NAME:-PUBG Clan Leaderboard}
+      - CLAN_NAME=${CLAN_NAME:-Our Clan}
+      - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-changeme123}
+      - CACHE_TTL_SEASONS=${CACHE_TTL_SEASONS:-86400}
+      - CACHE_TTL_PLAYER_STATS=${CACHE_TTL_PLAYER_STATS:-3600}
+      - CACHE_TTL_WEAPON_MASTERY=${CACHE_TTL_WEAPON_MASTERY:-21600}
+      - CACHE_TTL_LEADERBOARDS=${CACHE_TTL_LEADERBOARDS:-7200}
+      - CACHE_TTL_LIFETIME_STATS=${CACHE_TTL_LIFETIME_STATS:-43200}
+      - API_RATE_LIMIT=${API_RATE_LIMIT:-10}
+      - API_RATE_LIMIT_WINDOW=${API_RATE_LIMIT_WINDOW:-60}
+      - DB_PATH=/app/database/data.sqlite
+    restart: unless-stopped 
